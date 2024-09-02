@@ -36,7 +36,7 @@
       "displayName": "x64 Debug & Test",
       "inherits": "x64-debug",
       "cacheVariables": {
-        "date-utils-static_BUILD_TESTS": "ON"
+        "file-utils-static_BUILD_TESTS": "ON"
       }
     },
     {
@@ -94,7 +94,7 @@
       "displayName": "Linux Debug & Test",
       "inherits": "linux-debug",
       "cacheVariables": {
-        "date-utils-static_BUILD_TESTS": "ON"
+        "file-utils-static_BUILD_TESTS": "ON"
       }
     },
     {

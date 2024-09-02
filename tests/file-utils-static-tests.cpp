@@ -1,7 +1,7 @@
 #include <filesystem>
 #include <iostream>
 #include <gtest/gtest.h>
-#include <file_utils/file_utils.hpp>
+#include <file-utils-static.hpp>
 
 #ifdef _WIN32
 #include <windows.h>
@@ -50,9 +50,10 @@ protected:
 	void SetUp() override
 	{
 		try {
-			fs::path exePath = getExecutablePath();
-			fs::path parentPath = getParentPath(exePath, "out");
-			testPath = parentPath / "tests";
+			//fs::path exePath = getExecutablePath();
+			//fs::path parentPath = getParentPath(exePath, "out");
+			//testPath = parentPath / "tests";
+			testPath = fs::path(SOURCE_DIR) / "tests";
 
 			// check path
 			std::cout << "File path: " << testPath << std::endl;

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <cstdio>
 
-#include <file_utils/file_utils.hpp>
+#include <file-utils-static.hpp>
 
 void replace_all(std::string& source, char replace, const std::string& replacement)
 {
