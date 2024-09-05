@@ -1,6 +1,6 @@
 {
   "name": "file-utils-static",
-  "version": "1.0.0-beta",
+  "version": "1.0.1-beta",
   "description": "Static library that provides few file functions",
   "homepage": "https://github.com/krisk78/file-utils-static",
   "license": "MIT",

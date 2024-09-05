@@ -38,3 +38,9 @@ size_t EOL_length(const EOL eol_type);
 
 /*! \brief Returns the chars sequence of the EOL type. */
 std::string EOL_str(const EOL eol_type);
+
+/*! \brief Concatenates files.
+	Returns "" if no error occurs else the last error encountered looping input files.
+	If an input file cannot be opened it is ignored, the returned string is set but other files are still processed.
+*/
+std::string concatenateFiles(const std::vector<std::filesystem::path>& inputFiles, const std::filesystem::path& outputFile);

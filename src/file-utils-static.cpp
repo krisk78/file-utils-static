@@ -2,6 +2,7 @@
 //
 
 #include <regex>
+#include <iostream>
 #include <fstream>
 #include <cstdio>
 
@@ -143,3 +144,25 @@ std::string EOL_str(const EOL eol_type)
     }
 }
 
+std::string concatenateFiles(const std::vector<std::filesystem::path>& inputFiles, const std::filesystem::path& outputFile)
+{
+    std::string last_error = "";
+    std::ofstream out(outputFile, std::ios::binary);
+    if (!out)
+    {
+        return "Error opening output file " + outputFile.string() + ".";
+    }
+    for (const auto& file : inputFiles)
+    {
+        std::ifstream in(file, std::ios::binary);
+        if (!in)
+        {
+            last_error = "Error opening input file " + file.string() + ".";
+            continue;
+        }
+        out << in.rdbuf();
+        in.close();
+    }
+    out.close();
+    return last_error;
+}
