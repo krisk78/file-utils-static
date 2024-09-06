@@ -28,4 +28,5 @@ Returns the chars sequence of the given EOL type
 ## File manipulation
 
 ### std::string concatenateFiles(const std::vector&lt;std::filesystem::path&gt;& inputFiles, const std::filesystem::path& outputFile)
-Concatenates inputFiles to outputFile
+Concatenates inputFiles to outputFile<br>
+Returns the last error message if any
