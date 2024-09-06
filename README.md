@@ -2,7 +2,7 @@
 
 ## Search
 
-### std::vector<std::filesystem::path> dir(const std::string& pattern)
+### std::vector&lt;std::filesystem::path&gt; dir(const std::string& pattern)
 Return the list of paths matching the given pattern<br>
 Wildcards * and ? are supported in the filename part of the path
 
@@ -27,5 +27,5 @@ Returns the chars sequence of the given EOL type
 
 ## File manipulation
 
-### std::string concatenateFiles(const std::vector<std::filesystem::path>& inputFiles, const std::filesystem::path& outputFile)
+### std::string concatenateFiles(const std::vector&lt;std::filesystem::path&gt;& inputFiles, const std::filesystem::path& outputFile)
 Concatenates inputFiles to outputFile
