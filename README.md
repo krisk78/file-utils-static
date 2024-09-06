@@ -9,7 +9,7 @@ Wildcards * and ? are supported in the filename part of the path
 ## Information
 
 ### enum class EOL
-Sets values:
+Sets enums:
 * Unknown
 * Windows
 * Unix
