@@ -8,7 +8,9 @@
 
 #include <file-utils-static.hpp>
 
-void replace_all(std::string& source, char replace, const std::string& replacement)
+namespace fs = std::filesystem;
+
+static void replace_all(std::string& source, char replace, const std::string& replacement)
 {
     size_t pos{ 0 };
     while (pos < source.length() && (pos = source.find(replace, pos)) != std::string::npos)
@@ -18,7 +20,7 @@ void replace_all(std::string& source, char replace, const std::string& replaceme
     }
 }
 
-std::string to_regex_expression(const std::string& path)
+static std::string to_regex_expression(const std::string& path)
 {
     std::string expression{ "^" + path };
     replace_all(expression, '.', "\\.");
@@ -28,9 +30,7 @@ std::string to_regex_expression(const std::string& path)
     return expression;
 }
 
-namespace fs = std::filesystem;
-
-std::vector<fs::path> dir(const std::string& pattern)
+std::vector<fs::path> file_utils::dir(const std::string& pattern)
 {
 #ifdef _WIN32
     const std::string wildcards{ "*?" };
@@ -66,7 +66,7 @@ std::vector<fs::path> dir(const std::string& pattern)
     return result;
 }
 
-EOL find_EOL(const std::vector<char>& buf)
+static file_utils::EOL find_EOL(const std::vector<char>& buf)
 {
     auto itr = std::find(buf.rbegin(), buf.rend(), '\r');
     if (itr != buf.rend())
@@ -75,17 +75,17 @@ EOL find_EOL(const std::vector<char>& buf)
         {
             itr--;
             if (*itr == '\n')
-                return EOL::Windows;
+                return file_utils::EOL::Windows;
         }
-        return EOL::Mac;
+        return file_utils::EOL::Mac;
     }
     itr = std::find(buf.rbegin(), buf.rend(), '\n');
     if (itr != buf.rend())
-        return EOL::Unix;
-    return EOL::Unknown;
+        return file_utils::EOL::Unix;
+    return file_utils::EOL::Unknown;
 }
 
-EOL file_EOL(const std::filesystem::path& filepath)
+file_utils::EOL file_utils::file_EOL(const std::filesystem::path& filepath)
 {
     const std::ios::off_type BUF_LENGTH{ 4096 };
 
@@ -116,7 +116,7 @@ EOL file_EOL(const std::filesystem::path& filepath)
     return ret;
 }
 
-size_t EOL_length(const EOL eol_type)
+size_t file_utils::EOL_length(const file_utils::EOL eol_type)
 {
     switch (eol_type)
     {
@@ -129,7 +129,7 @@ size_t EOL_length(const EOL eol_type)
     }
 }
 
-std::string EOL_str(const EOL eol_type)
+std::string file_utils::EOL_str(const file_utils::EOL eol_type)
 {
     switch (eol_type)
     {
@@ -144,7 +144,7 @@ std::string EOL_str(const EOL eol_type)
     }
 }
 
-std::string concatenateFiles(const std::vector<std::filesystem::path>& inputFiles, const std::filesystem::path& outputFile)
+std::string file_utils::concatenateFiles(const std::vector<std::filesystem::path>& inputFiles, const std::filesystem::path& outputFile)
 {
     std::string last_error = "";
     std::ofstream out(outputFile, std::ios::binary);

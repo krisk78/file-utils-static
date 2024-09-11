@@ -10,8 +10,9 @@
 #endif
 
 namespace fs = std::filesystem;
+namespace file = file_utils;
 
-fs::path getExecutablePath()
+static fs::path getExecutablePath()
 {
 	char path[1024];
 
@@ -30,7 +31,7 @@ fs::path getExecutablePath()
 	return fs::path(path);
 }
 
-fs::path getParentPath(const fs::path& path, const std::string& target)
+static fs::path getParentPath(const fs::path& path, const std::string& target)
 {
 	auto current = path;
 	while (current.has_parent_path()) {
@@ -69,7 +70,7 @@ TEST_F(PathTestFixture, Current_Path_Dir)
 {
 	fs::current_path(testPath);
 	std::string testp{ "msxml?.*" };
-	auto result{ dir(testp) };
+	auto result{ file::dir(testp) };
 	EXPECT_EQ(result.size(), 2);
 	std::sort(result.begin(), result.end());
 	if (result.size() == 2)
@@ -82,7 +83,7 @@ TEST_F(PathTestFixture, Current_Path_Dir)
 TEST_F(PathTestFixture, Absolute_Path_Dir)
 {
 	std::string testp = testPath.string() + "/msxml?.*";
-	auto result{ dir(testp) };
+	auto result{ file::dir(testp) };
 	EXPECT_EQ(result.size(), 2);
 	std::sort(result.begin(), result.end());
 	if (result.size() == 2)
@@ -97,17 +98,11 @@ TEST_F(PathTestFixture, Absolute_Path_Dir)
 TEST_F(PathTestFixture, Windows_File)
 {
 	std::filesystem::path p = testPath / "windows.txt";
-	EXPECT_EQ(file_EOL(p), EOL::Windows);
+	EXPECT_EQ(file::file_EOL(p), file::EOL::Windows);
 }
 
 TEST_F(PathTestFixture, Unix_File)
 {
 	std::filesystem::path p = testPath / "unix.txt";
-	EXPECT_EQ(file_EOL(p), EOL::Unix);
-}
-
-int main(int argc, char** argv)
-{
-	::testing::InitGoogleTest(&argc, argv);
-	return RUN_ALL_TESTS();
+	EXPECT_EQ(file::file_EOL(p), file::EOL::Unix);
 }
